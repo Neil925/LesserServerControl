@@ -6,11 +6,11 @@ module.exports = {
     premissionError: "You need to have a valid role to run this command.",
     minArgs: 1,
     maxArgs: 1,
-    callback: async (messageCreate, arguments) => {
-        const port = +arguments[0];
+    callback: async (interaction, arguments) => {
+        const port = arguments[0];
         let signal = "stop";
 
-        if (messageCreate.channelId != "791113683521634304")
+        if (interaction.channelId != "791113683521634304")
             return;
 
         let server = await GetServerFromPort(port);
@@ -30,6 +30,4 @@ module.exports = {
 
         interaction.reply(`Signal \`stop\` has been sucessfully sent to server ${server.attributes.name}.`);
     },
-    premissions: [],
-    requirements: []
 }

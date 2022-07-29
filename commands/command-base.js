@@ -81,7 +81,7 @@ module.exports = (client, commandOptions) => {
         validatePermissions(permissions);
     }
 
-    client.on('messageCreate', interaction => {
+    client.on('messageCreate', async interaction => {
         const { member, content, guild } = interaction;
 
         for (const alias of commands) {
@@ -97,18 +97,18 @@ module.exports = (client, commandOptions) => {
 
                 // Ensure the user has the required roles.
                 for (const requiredRole of requiredRoles) {
-                    console.log(`The number of roles in this server is ${guild.roles.cache.length}`);
-                    const role = guild.roles.cache.find(role => role.name === requiredRole);
+                    let roles = await guild.roles.fetch();
 
-                    console.log(`The length of this users roles is ${member.roles.cache}.`);
-                    if (!role || !member.roles.cache.has(role.id)) {
-                        interaction.reply(`You must have the "${requiredRole} role to use this command.`);
-                        return;
+                    const role = roles.find(x => x.id == requiredRole);
+
+                    if (role && member.roles.cache.some(x => x.id == role)) {
+                        break;
                     }
+
+                    interaction.reply('You do not have a valid role to run this command.');
                 }
 
-                // Splot on any number of spaces
-
+                // Split on any number of spaces
                 const arguments = content.split(/[ ]+/);
 
                 // Remove the command which is the first index

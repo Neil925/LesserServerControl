@@ -30,5 +30,16 @@ module.exports = {
             console.error(error);
             return null;
         }
+    },
+
+    GetAllServers: async () => {
+        try {
+            let response = await axios.get("/api/client?include=egg");
+            let servers = response.data.data.filter(x => x.attributes.name.toLowerCase().includes('minecraft'));
+            return servers;
+        } catch (error) {
+            console.error(error);
+            return null;
+        }
     }
 }

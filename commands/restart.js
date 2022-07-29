@@ -6,13 +6,13 @@ module.exports = {
     premissionError: "You need to have a valid role to run this command.",
     minArgs: 1,
     maxArgs: 1,
-    callback: async (messageCreate, arguments) => {
+    callback: async (interaction, arguments) => {
         const port = arguments[0];
         let signal = "restart";
         let interval;
         let seconds = 0;
 
-        if (messageCreate.channelId != "791113683521634304")
+        if (interaction.channelId != "791113683521634304")
             return;
 
         let server = await GetServerFromPort(port);
@@ -30,7 +30,7 @@ module.exports = {
             return;
         }
 
-        let reply = await messageCreate.reply(`Signal \`${signal}\` has been sucessfully sent to server ${server.attributes.name}.\nAwaiting restart.`)
+        let reply = await interaction.reply(`Signal \`${signal}\` has been sucessfully sent to server ${server.attributes.name}.\nAwaiting restart.`)
 
         interval = setInterval(async function () {
             let status = await RequestServerStatus(identifier);
@@ -56,6 +56,4 @@ module.exports = {
             }
         }, 1000);
     },
-    premissions: [],
-    requiredRoles: []
 }
