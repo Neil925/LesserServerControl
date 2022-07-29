@@ -1,0 +1,13 @@
+{
+    "prefix": "m!",
+    "discordToken": "discordBotToken",
+    "pteroUrl": "https://example.website.com",
+    "pteroToken": "pterodactylToken",
+    "validRoles": [
+        "include",
+        "valid",
+        "role",
+        "IDs",
+        "here"
+    ]
+}
