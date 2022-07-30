@@ -96,16 +96,22 @@ module.exports = (client, commandOptions) => {
                 }
 
                 // Ensure the user has the required roles.
+                let flag = false;
+
                 for (const requiredRole of requiredRoles) {
                     let roles = await guild.roles.fetch();
 
                     const role = roles.find(x => x.id == requiredRole);
 
                     if (role && member.roles.cache.some(x => x.id == role)) {
+                        flag = true;
                         break;
                     }
+                }
 
+                if (!flag) {
                     interaction.reply('You do not have a valid role to run this command.');
+                    return;
                 }
 
                 // Split on any number of spaces
