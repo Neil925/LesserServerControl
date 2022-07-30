@@ -1,4 +1,4 @@
-const { prefix, validRoles } = require('../config.json');
+const { prefix, validRoles, validChannels } = require('../config.json');
 
 const validatePermissions = (permissions) => {
     const validPermissions = [
@@ -69,7 +69,6 @@ module.exports = (client, commandOptions) => {
         commands = [commands];
     }
 
-    console.log(commands);
     console.log(`Registering command "${commands[0]}"`);
 
     //Ensure the permissions are in an array and are all valid
@@ -82,11 +81,16 @@ module.exports = (client, commandOptions) => {
     }
 
     client.on('messageCreate', async interaction => {
-        const { member, content, guild } = interaction;
+        const { member, content, guild, channel } = interaction;
+
+        if (validChannels.length && !validChannels.includes(channel.id)) {
+            return;
+        }
 
         for (const alias of commands) {
             if (content.toLowerCase().startsWith(`${prefix}${alias.toLowerCase()}`)) {
                 // A command has ran
+
 
                 for (const permission of permissions) {
                     if (!member.hasPermission(permission)) {
@@ -109,7 +113,7 @@ module.exports = (client, commandOptions) => {
                     }
                 }
 
-                if (!flag) {
+                if (!flag && requiredRoles.length) {
                     interaction.reply('You do not have a valid role to run this command.');
                     return;
                 }

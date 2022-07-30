@@ -12,9 +12,6 @@ module.exports = {
         let interval;
         let seconds = 0;
 
-        if (interaction.channelId != "791113683521634304")
-            return;
-
         let server = await GetServerFromPort(port);
 
         let identifier = server.attributes.identifier;

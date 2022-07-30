@@ -9,5 +9,11 @@
         "role",
         "IDs",
         "here"
+    ],
+    // Leaving this as an empty array will allow all channels for server control.
+    "validChannels": [
+        "channel",
+        "IDs",
+        "here"
     ]
 }

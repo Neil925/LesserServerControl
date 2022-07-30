@@ -10,9 +10,6 @@ module.exports = {
         const port = arguments[0];
         let signal = "stop";
 
-        if (interaction.channelId != "791113683521634304")
-            return;
-
         let server = await GetServerFromPort(port);
 
         let identifier = server.attributes.identifier;
