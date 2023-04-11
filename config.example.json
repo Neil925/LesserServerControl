@@ -15,5 +15,19 @@
         "channel",
         "IDs",
         "here"
-    ]
+    ],
+    "modules": {
+        "transendence": {
+            "enabled": true,
+            "channelId": "1024154228186427432"
+        },
+        "voiceChannelAlert": {
+            "enabled": true,
+            "channelId": "1095166279461130381",
+            "rolePingId": "1095166670626107463",
+            "messageId": "1095208478227828817",
+            "alertText": "{role} someone has joined {channel}",
+            "minutesCoolDown": 60
+        }
+    }
 }
