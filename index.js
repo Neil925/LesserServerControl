@@ -28,6 +28,15 @@ client.on('ready', async () => {
     readCommands('commands');
 });
 
+client.on('messageCreate', async ev => {
+    if (ev.channel.id != "1207150362667130950")
+        return;
+
+    let text = ev.content();
+    await ev.delete();
+    await ev.channel.send(text);
+});
+
 client.on('guildMemberUpdate', async (oldMember, newMember) => {
     if (!modules.transendence.enabled)
         return;
@@ -55,7 +64,7 @@ client.on('voiceStateUpdate', async (oldState, newState) => {
         oldState.channel?.members?.size == newState.channel?.members?.size)
         return;
 
-    let {channelId, messageId, minutesCoolDown, alertText, rolePingId} = modules.voiceChannelAlert;
+    let { channelId, messageId, minutesCoolDown, alertText, rolePingId } = modules.voiceChannelAlert;
 
     let channel = await newState.guild.channels.fetch(channelId);
     let statusMessage = await channel.messages.fetch(messageId);
