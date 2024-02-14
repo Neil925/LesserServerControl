@@ -1,8 +1,8 @@
 const path = require('path');
 const fs = require('fs');
 const { discordToken, modules } = require('./config.json');
-const { Client, GatewayIntentBits, TextChannel, EmbedBuilder, ChannelType } = require('discord.js');
-const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildMembers, GatewayIntentBits.GuildVoiceStates] });
+const { Client, GatewayIntentBits, EmbedBuilder, ChannelType, Partials } = require('discord.js');
+const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent, GatewayIntentBits.GuildMembers, GatewayIntentBits.GuildVoiceStates, GatewayIntentBits.DirectMessages, GatewayIntentBits.DirectMessageTyping], partials: [Partials.Channel, Partials.Message] });
 
 var lastVoiceStateUpdate = 0;
 
@@ -29,10 +29,18 @@ client.on('ready', async () => {
 });
 
 client.on('messageCreate', async ev => {
-    if (ev.channel.id != "1207150362667130950")
+    if (ev.author.bot)
         return;
 
-    let text = ev.content();
+    if (modules.dmLogger.enabled && ev.channel.isDMBased()) {
+        let channel = await (await client.guilds.fetch(modules.dmLogger.guild)).channels.fetch(modules.dmLogger.channelid);
+        await channel.send(`<@!${ev.author.id}>: ${ev.content}`);
+    }
+
+    if (!modules.outOfContext.enabled || ev.channel.id != modules.outOfContext.channelid)
+        return;
+
+    let text = ev.content;
     await ev.delete();
     await ev.channel.send(text);
 });

@@ -1,7 +1,9 @@
+const { validRoles } = require('../config.json');
 const { SendSignal, RequestServerStatus, GetServerFromPort } = require('../axios');
 
 module.exports = {
     commands: ["restart"],
+    requiredRoles: validRoles,
     expectedArgs: "<restart>",
     premissionError: "You need to have a valid role to run this command.",
     minArgs: 1,

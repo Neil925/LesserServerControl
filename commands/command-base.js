@@ -1,4 +1,4 @@
-const { prefix, validRoles, validChannels } = require('../config.json');
+const { prefix, validChannels } = require('../config.json');
 
 const validatePermissions = (permissions) => {
     const validPermissions = [
@@ -60,7 +60,7 @@ module.exports = (client, commandOptions) => {
         minArgs = 0,
         maxArgs = null,
         permissions = [],
-        requiredRoles = validRoles,
+        requiredRoles,
         callback
     } = commandOptions;
 

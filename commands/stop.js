@@ -1,8 +1,10 @@
+const { validRoles } = require('../config.json');
 const { SendSignal, GetServerFromPort } = require('../axios');
 
 module.exports = {
     commands: ["stop"],
     expectedArgs: "<port>",
+    requiredRoles: validRoles,
     premissionError: "You need to have a valid role to run this command.",
     minArgs: 1,
     maxArgs: 1,

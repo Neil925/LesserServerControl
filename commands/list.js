@@ -1,7 +1,9 @@
+const { validRoles } = require('../config.json');
 const { GetAllServers, RequestServerStatus } = require('../axios');
 
 module.exports = {
     commands: ['list'],
+    requiredRoles: validRoles,
     permissionError: 'You need to have a valid role to run this command.',
     minArgs: 0,
     maxArgs: 0,
